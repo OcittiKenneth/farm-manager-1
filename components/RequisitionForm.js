@@ -3,7 +3,7 @@ import {
     ScrollView,
     View,
     StyleSheet,
-    TextInput,
+    // TextInput,
     Button,
     Text,
     TouchableHighlight,
@@ -53,7 +53,7 @@ const RequisitionOptions = {
     fields: {
         Date: {
             mode: 'date',
-            error: "Please enter harvest date"
+            error: "Please enter harvest date",
         },
         CostType: {
             returnKeyType: 'next',
@@ -77,18 +77,15 @@ const RequisitionOptions = {
         },
         Quantity: {
             returnKeyType: 'next',
-            // onSubmitEditing: () => { this.refs.form.getComponent('UnitPrice').refs.input.focus() },
             placeholder: 'Quantity',
             error: 'Please provide description'
         },
         UnitPrice: {
-            // onSubmitEditing: () => { this.refs.form.getComponent('Quantity').refs.input.focus() },
             returnKeyType: 'next',
             placeholder: 'Unit price',
             error: 'Please enter unit price'
         },
         SubTotal: {
-            // onPress: () => this.onPress,
             placeholder: 'Sub total',
             error: 'Expect correct values'
         },
@@ -119,15 +116,15 @@ export default class RequisitionForm extends Component {
         super(props);
         this.state = { Quantity: "", UnitPrice: "", SubTotal: "" };
     }
-    onChangeText = (text) => {
-        Quantity = this.refs.form.getComponent('Quantity').refs.input.focus();
-        UnitPrice = this.refs.form.getComponent('UnitPrice').refs.input.focus();
-        SubTotal = this.refs.form.getComponent('SubTotal').refs.input.focus();
-        const yy = this.setState({ Quantity: parseFloat(text) });
-        const xx = this.setState({ UnitPrice: parseFloat(text) });
-        const subResult = yy * xx;
-        SubTotal = this.setState({ SubTotal: parseFloat(subResult) });
 
+    onFormChange = (text) => {
+        reQuantity = this.refs.form.getComponent('Quantity').refs.input.focus();
+        reUnitPrice = this.refs.form.getComponent('UnitPrice').refs.input.focus();
+        reSubTotal = this.refs.form.getComponent('SubTotal').refs.input.focus();
+        const yy = this.setState({ reQuantity: this.state.Quantity + text });
+        const xx = this.setState({ reUnitPrice: this.state.UnitPrice + text });
+        const subResult = yy * xx;
+        SubTotal = this.setState({ reSubTotal: this.state.SubTotal + subResult });
     }
 
     handleSubmit = () => {
@@ -138,11 +135,10 @@ export default class RequisitionForm extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <KeyboardAvoidingView behavior="padding" enabled onPress={() => { Keyboard.dismiss(); }}>
+                <KeyboardAvoidingView behavior="padding" enabled >
                     <ScrollView>
-                        <TextInput ref='form' type={Requisition} options={RequisitionOptions} />
                         <View><Text style={styles.text}>Requisition Form</Text></View>
-                        <Form ref={request => (this.formRef = request)} type={Requisition} options={RequisitionOptions} onChangeText={this.onChangeText} />
+                        <Form ref={request => (this.formRef = request)} type={Requisition} options={RequisitionOptions} onPress={this.onFormChange} />
                         <TouchableHighlight>
                             <View style={styles.buttonView}><Button color="#0A802B" title="SUBMIT REQUEST" onPress={this.handleSubmit} /></View>
                         </TouchableHighlight>
@@ -156,13 +152,14 @@ export default class RequisitionForm extends Component {
 const styles = StyleSheet.create({
     container: {
         justifyContent: "center",
-        marginTop: 24,
+        marginTop: 17,
         padding: 17,
         paddingBottom: 50
 
     },
     text: {
         fontSize: 40,
+        marginBottom: 20,
         fontWeight: '700',
         textAlign: 'center',
         color: "#650205",
