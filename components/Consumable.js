@@ -117,11 +117,9 @@ export default class Consumable extends Component {
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled onPress={() => { Keyboard.dismiss(); }}>
                 <ScrollView>
                     <View>
-                        <View style={{ backgroundColor: 'grey' }}>
+                        <View>
                             <Text style={styles.title}>Consumable</Text>
                         </View>
-                        <View style={styles.horizontal}
-                        />
                         <Form ref={c => (this._form = c)} type={User} options={options} />
                         <View style={styles.button}><Button color="#0A802B" title="Save" onPress={this.handleSubmit} /></View>
                     </View>
@@ -161,11 +159,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     button: {
-        marginTop: 20,
-    },
-    horizontal: {
-        borderBottomColor: 'black',
-        borderBottomWidth: 1,
-        marginBottom: 15
+        marginTop: 10,
+        marginBottom:35
     }
 });
