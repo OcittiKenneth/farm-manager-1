@@ -4,51 +4,43 @@ import {
     View,
     StyleSheet,
     Button,
-    Linking,
     Text,
     KeyboardAvoidingView,
 } from "react-native";
 
 var t = require("tcomb-form-native");
 const Form = t.form.Form;
-// const Quantity = t.refinement(t.String, Quantity => {
-//     const qtyReg = /^[0-9\s]$/;
-//     return qtyReg.test(Quantity);
-// });
-// const QuantityUsed = t.refinement(t.Number, QuantityUsed => {
-//     const qtyUsedReg = /^[0-9\s]$/;
-//     return qtyUsedReg.test(QuantityUsed);
-// });
-// const Name = t.refinement(t.String, Name => {
-//     const regex = /^[a-zA-Z].*[\s\.]*$/g;
-//     return regex.test(Name);
-// });
+const Quantity = t.refinement(t.String, Quantity => {
+    const qtyReg = /^[0-9\s]$/;
+    return qtyReg.test(Quantity);
+});
+const QuantityUsed = t.refinement(t.Number, QuantityUsed => {
+    const qtyUsedReg = /^[0-9\s]$/;
+    return qtyUsedReg.test(QuantityUsed);
+});
+const Name = t.refinement(t.String, Name => {
+    const regex = /^[a-zA-Z].*[\s\.]*$/g;
+    return regex.test(Name);
+});
 
-// const QuantityBalance = t.refinement(t.Number, QuantityBalance => {
-//     const qtyBalanceReg = /^[0-9\s]$/;
-//     return qtyBalanceReg.test(QuantityBalance);
-// })
-// const Description = t.refinement(t.String, Description => {
-//     const descReg = /^[a-zA-Z].*[\s\.]*$/g;
-//     return descReg.test(Description);
-// })
-// const Notification = t.refinement(t.String, Notification => {
-//     const notificationReg = ''
-// })
-// const TakenBy = t.refinement(t.String, TakenBy => {
-//     const takenReg = /^[a-zA-Z].*[\s\.]*$/g;
-//     return takenReg.test(TakenBy);
-// })
+const QuantityBalance = t.refinement(t.Number, QuantityBalance => {
+    const qtyBalanceReg = /^[0-9\s]$/;
+    return qtyBalanceReg.test(QuantityBalance);
+})
+const TakenBy = t.refinement(t.String, TakenBy => {
+    const takenReg = /^[a-zA-Z].*[\s\.]*$/g;
+    return takenReg.test(TakenBy);
+})
 
 
 const User = t.struct({
-    Name: t.String,
-    Quantity: t.Number,
-    QuantityUsed: t.Number,
-    QuantityBalance: t.Number,
+    Name: Name,
+    Quantity: Quantity,
+    QuantityUsed: QuantityUsed,
+    QuantityBalance: QuantityBalance,
     Description: t.String,
     Notification: t.String,
-    TakenBy: t.String,
+    TakenBy: TakenBy,
 });
 
 const formStyles = {
@@ -76,29 +68,18 @@ const formStyles = {
 const options = {
     fields: {
         Name: {
-            placeholder: 'Name',
             error: "Please enter a correct Name"
         },
         Quantity: {
-            placeholder: 'Quantity',
             error: "Please enter correct quantity value"
         },
         QuantityUsed: {
-            placeholder: 'Quantity Used',
             error: "Please enter correct quantity value"
         },
         QuantityBalance: {
-            placeholder: 'Quantity Balance',
             error: "Please enter correct quantity value"
         },
-        Notification: {
-            placeholder: 'Notification'
-        },
-        Description: {
-            placeholder: 'Description'
-        },
         TakenBy: {
-            placeholder: 'Taken By',
             error: 'Please enter in letters'
         },
     },
@@ -110,7 +91,6 @@ export default class Consumable extends Component {
         const value = this._form.getValue();
         console.log("value: ", value);
     };
-
 
     render() {
         return (
@@ -142,7 +122,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
         color: "#650205",
         textAlign: "center",
-        marginBottom: 25
+        marginBottom: 12
     },
     question: {
         color: "#650205",
@@ -160,6 +140,6 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop: 10,
-        marginBottom:35
+        marginBottom: 35
     }
 });
