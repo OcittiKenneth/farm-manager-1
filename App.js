@@ -6,7 +6,7 @@ import SignUp from './components/SignUp';
 import Consumable from './components/Consumable'
 
 export default function App() {
-  return (
+  return (  
     <View style={{ flex: 1 }}>
       {/* <Login /> */}
       {/* <SignUp /> */}
