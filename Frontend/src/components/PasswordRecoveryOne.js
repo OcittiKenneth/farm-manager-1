@@ -69,10 +69,9 @@ export default class PasswordRecovery extends Component {
       >
         <ScrollView>
           <View style={styles.container}>
-            <Image
-              style={{ width: 250, margin: 30 }}
-              source={require("../images/user.png")}
-            />
+            <View style={styles.image}>
+              <Image source={require("../images/user.png")} />
+            </View>
             <Text style={styles.word1}>Password Recovery</Text>
             <Text style={styles.word2}>Enter Account Email</Text>
             <Form
@@ -82,13 +81,7 @@ export default class PasswordRecovery extends Component {
             />
             <View>
               <Text
-                style={{
-                  textAlign: "center",
-                  marginTop: 5,
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  color: "blue"
-                }}
+                style={styles.recovery}
                 onPress={() => Linking.openURL("http://google.com")}
               >
                 Send Recovery Link To My Email
@@ -107,18 +100,28 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff"
   },
+  image: {
+    alignItems: "center",
+    marginTop: 25
+  },
   word1: {
-    fontSize: 25,
+    fontSize: 20,
     marginTop: 10,
     color: "#650225",
     fontWeight: "bold"
   },
   word2: {
-    fontSize: 20,
+    fontSize: 18,
     marginTop: 10,
     color: "#650225",
     paddingBottom: 40,
-    paddingTop: 20,
-    fontWeight: "bold"
+    paddingTop: 20
+  },
+  recovery: {
+    textAlign: "center",
+    marginTop: 5,
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#650225"
   }
 });

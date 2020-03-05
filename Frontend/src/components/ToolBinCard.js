@@ -18,7 +18,7 @@ var ToolCondition = t.enums({
   DamagedNotWorking: "Damaged, Not Working",
   Misplaced: "Misplaced or Lost",
   BoardedOff: "Boarded Off"
- });
+});
 
 const ToolName = t.refinement(t.String, ToolName => {
   const regex = /^[a-zA-Z0-9].*[\s\.]*$/i; //case insensitive string with space.
@@ -30,7 +30,6 @@ const TakenBy = t.refinement(t.String, TakenBy => {
   return regex.test(TakenBy);
 });
 
-
 const Desription = t.refinement(t.String, Desription => {
   const regex = /^[a-zA-Z].*[\s\.]*$/i; //case insensitive string with space
   return regex.test(Desription);
@@ -40,7 +39,6 @@ const StoreName = t.refinement(t.String, StoreName => {
   const regex = /^[a-zA-Z].*[\s\.]*$/i; //case insensitive string with space
   return regex.test(StoreName);
 });
-
 
 /** create the structure of the form. Image field is treated separately. */
 const User = t.struct({
@@ -82,27 +80,50 @@ const formStyles = {
 const options = {
   fields: {
     ToolName: {
+      label: "Tool Name",
       error: "Please use only letters."
     },
     Description: {
       error: "Please explain what the tool is exactly."
     },
     DateTakenIn: {
-      mode: "date"
+      label: "Date Taken In",
+      mode: "date",
+      config: {
+        defaultValueText: "Select",
+        format: date => moment(date).format("DD-MM-YYYY")
+      }
     },
     StoreName: {
-      error: "Please where the tool is being kept."
+      label: "Store Name",
+      error: "Please mention where the tool is being kept."
     },
     DateTakenOut: {
-      mode: "date"
+      label: "Date Taken Out",
+      mode: "date",
+      config: {
+        defaultValueText: "Select",
+        format: date => moment(date).format("DD-MM-YYYY")
+      }
     },
     TakenBy: {
+      label: "Taken By",
       error: "Please enter persons name."
     },
+    ToolCondition: {
+      label: "Tool Condition",
+      error: "Please enter tool condition."
+    },
     DateOfPurchase: {
-      mode: "date"
+      label: "Date of Purchase",
+      mode: "date",
+      config: {
+        defaultValueText: "Select",
+        format: date => moment(date).format("DD-MM-YYYY")
+      }
     },
     SerialNumber: {
+      label: "Serial Number",
       error: "Please use letters & numbers."
     }
   },
@@ -158,10 +179,7 @@ export default class ToolBinCard extends Component {
           <View>
             <Text style={styles.title}>Tool Bin Card</Text>
             <Form ref={c => (this._form = c)} type={User} options={options} />
-            <Button
-              title="Select Image."
-              onPress={this._pickImage}
-            />
+            <Button title="Select Image." onPress={this._pickImage} />
             {image && (
               <Image
                 source={{ uri: image }}
@@ -204,6 +222,6 @@ const styles = StyleSheet.create({
 
   button: {
     marginTop: 20,
-    marginBottom:20
+    marginBottom: 20
   }
 });

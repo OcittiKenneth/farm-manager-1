@@ -77,19 +77,16 @@ export default class PasswordRecovery extends Component {
       >
         <ScrollView>
           <View style={styles.container}>
-            <Image
-              style={{
-                width: 250,
-                margin: 30
-              }}
-              source={require("../images/user.png")}
-            />
+            <View style={styles.image}>
+              <Image source={require("../images/user.png")} />
+            </View>
             <Form
               ref={c => (this._form = c)}
               type={RecoveryTwo}
               options={options}
             />
             <Button
+              style={styles.button}
               title="SUBMIT"
               color="#0A802B"
               onPress={this.handleSubmit}
@@ -108,11 +105,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     fontWeight: "bold"
   },
-  word: {
-    fontSize: 25,
-    marginTop: 70,
-    color: "#650225",
-    paddingBottom: 40,
-    paddingTop: 20
+  image: {
+    alignItems: "center",
+    marginTop: 25
   }
 });

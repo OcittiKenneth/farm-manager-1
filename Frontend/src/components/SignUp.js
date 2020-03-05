@@ -188,24 +188,23 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 35,
-    marginTop: 5,
+    marginTop: 30,
     color: "#650205",
     textAlign: "center",
     marginBottom: 25
   },
   question: {
-    color: "#650205",
+    color: "gray",
     textAlign: "center",
     marginTop: 18,
     fontSize: 18
   },
   link: {
-    fontWeight: "bold",
+    // fontWeight: "bold",
     color: "#650205",
     textAlign: "center",
     marginTop: 8,
-    fontSize: 20,
-    fontWeight: "bold"
+    fontSize: 20
   },
   button: {
     marginTop: 20

@@ -44,7 +44,6 @@ const JobTitle = t.refinement(t.String, JobTitle => {
   return regex.test(JobTitle);
 });
 
-
 /** create the structure of the form. Image field is treated separately. */
 const User = t.struct({
   FirstName: FirstName, //string
@@ -85,21 +84,41 @@ const formStyles = {
 const options = {
   fields: {
     FirstName: {
+      label: "First Name",
       error: "Please use only letters."
     },
     LastName: {
+      label: "Last Name",
       error: "Please use only letters."
     },
     DateOfBirth: {
-      mode: "date"
+      label: "Date of Birth",
+      mode: "date",
+      config: {
+        defaultValueText: "Select",
+        format: date => moment(date).format("DD-MM-YYYY")
+      }
     },
     JobStartDate: {
-      mode: "date"
+      label: "Job Start Date",
+      mode: "date",
+      config: {
+        defaultValueText: "Select",
+        format: date => moment(date).format("DD-MM-YYYY")
+      }
     },
     PhoneNumber1: {
+      label: "Phone Number1",
       error: "Please use only digits."
     },
+    PhoneNumber2: {
+      label: "Phone Number2"
+    },
+    NationalIdNo: {
+      label: "National Id No"
+    },
     JobTitle: {
+      label: "Job Title",
       error: "Please use only letters & words."
     }
   },
@@ -155,10 +174,7 @@ export default class Personnel extends Component {
           <View>
             <Text style={styles.title}>Personnel File</Text>
             <Form ref={c => (this._form = c)} type={User} options={options} />
-            <Button
-              title="Select Image."
-              onPress={this._pickImage}
-            />
+            <Button title="Select Image." onPress={this._pickImage} />
             {image && (
               <Image
                 source={{ uri: image }}
@@ -201,6 +217,6 @@ const styles = StyleSheet.create({
 
   button: {
     marginTop: 20,
-    marginBottom:20
+    marginBottom: 20
   }
 });
