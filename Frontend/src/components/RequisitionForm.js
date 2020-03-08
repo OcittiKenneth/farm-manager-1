@@ -3,7 +3,6 @@ import {
   ScrollView,
   View,
   StyleSheet,
-  TextInput,
   Button,
   Text,
   TouchableHighlight,
@@ -60,47 +59,31 @@ const RequisitionOptions = {
       }
     },
     CostType: {
-      label: "Cost Type",
-      returnKeyType: "next",
       error: "Please enter correct quantity value"
     },
     Units: {
-      returnKeyType: "next",
       error: "Please enter correct unit value"
     },
     Activity: {
-      returnKeyType: "next",
       error: "Name of activity or item is required"
     },
     store: {
-      returnKeyType: "next",
       error: "Please provide store name"
     },
     Quantity: {
-      returnKeyType: "next",
       error: "Please provide description"
     },
     UnitPrice: {
-      label: "Unit Price",
-      returnKeyType: "next",
       error: "Please enter unit price"
     },
     SubTotal: {
-      label: "Sub-total",
       error: "Expect correct values"
     },
     Description: {
-      returnKeyType: "next",
       error: "Please describe requisition"
     },
     RequestedBy: {
-      label: "Requested By",
-      returnKeyType: "next",
       error: "Requested by who?"
-    },
-    ApprovedBy: {
-      label: "Approved By",
-      returnKeyType: "done"
     },
     Total: {
       error: "No total captured"
@@ -114,19 +97,14 @@ export default class RequisitionForm extends Component {
     super(props);
     this.state = { Quantity: "", UnitPrice: "", SubTotal: "" };
   }
-  onChangeText = text => {
-    Quantity = this.refs.form.getComponent("Quantity").refs.input.focus();
-    UnitPrice = this.refs.form.getComponent("UnitPrice").refs.input.focus();
-    SubTotal = this.refs.form.getComponent("SubTotal").refs.input.focus();
-    const yy = this.setState({ Quantity: parseFloat(text) });
-    const xx = this.setState({ UnitPrice: parseFloat(text) });
-    const subResult = yy * xx;
-    SubTotal = this.setState({ SubTotal: parseFloat(subResult) });
-  };
-
   handleSubmit = () => {
     const value = this.formRef.getValue();
+    const quantity = value.Quantity;
+    const unitPrice = value.UnitPrice;
+    const subTotal = quantity * unitPrice
+
     console.log("value: ", value);
+    console.log(subTotal);
   };
 
   render() {
@@ -140,11 +118,6 @@ export default class RequisitionForm extends Component {
           }}
         >
           <ScrollView>
-            <TextInput
-              ref="form"
-              type={Requisition}
-              options={RequisitionOptions}
-            />
             <View>
               <Text style={styles.title}>Requisition Form</Text>
             </View>
@@ -152,7 +125,6 @@ export default class RequisitionForm extends Component {
               ref={request => (this.formRef = request)}
               type={Requisition}
               options={RequisitionOptions}
-              onChangeText={this.onChangeText}
             />
             <TouchableHighlight>
               <View style={styles.buttonView}>
