@@ -97,6 +97,7 @@ export default class RequisitionForm extends Component {
     super(props);
     this.state = { Quantity: "", UnitPrice: "", SubTotal: "" };
   }
+
   handleSubmit = () => {
     const value = this.formRef.getValue();
     const quantity = value.Quantity;

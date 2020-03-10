@@ -7,6 +7,7 @@ import {
   Text,
   KeyboardAvoidingView
 } from "react-native";
+import { response } from "express";
 
 var t = require("tcomb-form-native");
 const Form = t.form.Form;
@@ -86,6 +87,39 @@ const options = {
 };
 
 export default class Consumable extends Component {
+  // constructor() {
+  //   super();
+  //   this.state = { Name: Name, Quantity: Quantity, QuantityUsed: QuantityUsed, QuantityBalance: QuantityBalance, Description: Description, Notification: Notification, TakenBy: TakenBy }
+  // }
+
+  // InsertDataInToConsumable = async () => {
+  //   fetch("http://ac23113a.ngrok.io/api", {
+  //     method: "Post",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       name: this.Name,
+  //       quantity: this.Quantity,
+  //       quantityUsed: this.QuantityUsed,
+  //       quantityBalance: this.QuantityBalance,
+  //       description: this.Description,
+  //       notification: this.Notification,
+  //       takenBy: this.TakenBy,
+  //     })
+  //   })
+
+  //     .then(response => response.json())
+  //     .then(responseJson => {
+  //       alert("You are sucessful")
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     })
+
+  // }
+
   handleSubmit = () => {
     const value = this._form.getValue();
     console.log("value: ", value);
