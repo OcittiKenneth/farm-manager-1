@@ -8,6 +8,9 @@ import {
   Linking,
   KeyboardAvoidingView
 } from "react-native";
+import { SQlite } from 'expo-sqlite';
+
+const db = SQlite.openDatabase("my.db");
 
 var t = require("tcomb-form-native");
 const Form = t.form.Form;
@@ -85,72 +88,53 @@ const options = {
 export default class SignUp extends Component {
   constructor(props) {
     super(props);
-    this.Name, this.Email, this.Phone, this.Password;
+    this.state = {
+      Name: "", Email: "", Phone: "", Password: ""
+    };
+
+    db.transaction(function (txn) {
+      txn.executeSql(
+        "SELECT * FROM users ?", [],
+        function (txt, res) {
+          console.log("Item: ", res.row.length);
+          if (res.row.length == 0) {
+            txn.executeSql(
+              "CREATE TABLE IF NOT EXITS users (id interger PRIMARY KEY, name TEXT, email TEXT UNIQUE, phone INTERGER, password TEXT)",
+              []
+            );
+          }
+        }
+      );
+    });
   }
 
-  // componentDidMount() {
-  //   this.refs._form.getComponent("Name").refs.input.focus();
-  // }
-
-  InsertDataToServer = async () => {
-    fetch("http://ac23113a.ngrok.io/data", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: this.Name,
-        email: this.Email,
-        phone: this.Phone,
-        password: this.Password
-      })
+  toggleDataSubmitted = () => {
+    this.setState({
+      Name: this.state.Name,
+      Email: this.state.Email,
+      Phone: this.state.Phone,
+      Password: this.state.Password
     })
-      // .then(response => {
-      //   if (
-      //     response.statusText == "OK" &&
-      //     response.status >= 200 &&
-      //     response.status < 300
-      //   ) {
-      //     return response.json();
-      //   } else {
-      //     throw new Error("Server can't be reached!");
-      //   }
-      // })
-      // .then(json => {
-      //   alert("Thank You for Signing Up!");
-      //   this.props.navigation.navigate("Login");
-      //   console.log("hooray! we have json!");
-      //   console.log(json);
-      // })
-      // .catch(error => {
-      //   console.log("error fetching data");
-      //   console.log(error);
-      //   console.log(error.message); // Server can't be reached!
-      //   this.setState({ server_error: "request failed try again." });
-      // });
-
-      .then(response => response.json())
-      .then(responseJson => {
-        // alert("Thank You for Signing Up!");
-        Alert.alert(responseJson);
-        this.props.navigation.navigate("Login");
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
+  }
 
   handleSubmit = () => {
     const value = this._form.getValue();
     console.log(value);
-    if (value != null) {
-      (this.Name = value.Name),
-        (this.Email = value.Email),
-        (this.Phone = value.Phone),
-        (this.Password = value.Password),
-        this.InsertDataToServer();
-    }
+    const { Name } = this.state;
+    const { Email } = this.state;
+    const { Phone } = this.state.Phone;
+    const { Password } = this.state.Password;
+
+    db.transaction(function (tx) {
+      tx.executeSql(
+        "INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)",
+        [Name, Email, Phone, Password],
+        (tx, results) => {
+
+        }
+      )
+    })
+
   };
 
   render() {
@@ -164,7 +148,7 @@ export default class SignUp extends Component {
               <Button
                 color="#0A802B"
                 title="Sign Up"
-                onPress={this.handleSubmit}
+                onPress={this.handleSubmit.bind(this)}
               />
             </View>
             <Text style={styles.question}>Have an account?</Text>
@@ -177,9 +161,11 @@ export default class SignUp extends Component {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    );
+    )
   }
-}
+};
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -200,7 +186,6 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   link: {
-    // fontWeight: "bold",
     color: "#650205",
     textAlign: "center",
     marginTop: 8,
@@ -211,4 +196,3 @@ const styles = StyleSheet.create({
   }
 });
 
-// export default SignUp;
