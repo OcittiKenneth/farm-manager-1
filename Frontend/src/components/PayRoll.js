@@ -64,7 +64,7 @@ const Payroll = t.struct({
   LST: t.maybe(t.Number),
   Advance: t.maybe(t.Number),
   NetPay: t.Number,
-  PaySlip: t.maybe(t.String),
+  // PaySlip: t.maybe(t.String),
   Total: t.Number
 });
 

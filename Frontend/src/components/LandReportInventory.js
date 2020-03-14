@@ -9,31 +9,28 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from '@react-navigation/stack';
-import LandReportFinance from "./LandReportFinance";
-import LandReportInventory from "./LandReportInventory";
+// import LandReportFinance from "./IncomeForm";
+// import LandReportInventory from "./LandReportInventory";
 
 const Stack = createStackNavigator();
 
 
-export default function HomePage({navigation}) {
+export default function LandReportInventory({navigation}) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('Finance')} style={styles.finance}>
-        <View>
-          <Text>FINANCE</Text>
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => navigation.navigate('Inventory')} style={styles.inventory}>
+        
+      <TouchableOpacity style={styles.finance}>
         <View>
           <Text>INVENTORY</Text>
         </View>
       </TouchableOpacity>
+      <Button
+                    title="ADD"
+                    style={styles.butt}
+                    onPress={() => navigation.navigate("NewToolForm")}
+                />
 
-      <View style={styles.update}>
-        <Text style={styles.text}>UPDATE</Text>
       </View>
-    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -88,3 +85,20 @@ const styles = StyleSheet.create({
     color: "white"
   }
 });
+
+
+
+// import React, { Component } from 'react'
+// import { Text, View } from 'react-native'
+
+// export default class LandReportInventory extends Component {
+//     render( {} ) {
+//         // const ref = React.useRef(null);
+//         return (
+//             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//                 <Text> Landing page for the inventory module </Text>
+//             </View>
+//         )
+//     }
+// }
+
