@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const crypto = require("crypto");
 const session = require("express-session");
 const cors = require("cors");
+const routerTrial = require("./trial")
 
 const router = express.Router();
 const sqlite3 = require("sqlite3").verbose();
@@ -19,7 +20,7 @@ const database = new sqlite3.Database("./my.db")
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(router);
+app.use(router, routerTrial);
 app.use(cors());
 
 router.post("/register", (req, res) => {
@@ -43,27 +44,6 @@ router.post("/register", (req, res) => {
     })
   });
 });
-
-router.post(User)
-// router.post("/login", (req, res) => {
-//   const { email, password } = req.body;
-//   database.get(`SELECT * FROM users WHERE email=?`, email, (err, row) => {
-//     if (!row) return res.status(401).send("invalid email");
-
-//     const result = bcrypt.compareSync(password, row.password);
-//     console.log(result);
-//     if (result) {
-//       const payload = { userInformation: row };
-//       console.log(payload)
-//       const token = jwt.sign(payload, SECRET_KEY);
-//       let currentDate = new Date();
-//       currentDate.setHours(currentDate.getHours() + 1);
-
-//       res.json({ token: token, expiresOn: currentDate.toISOString() });
-//     } else res.status(401).json({ password: "Password is incorrect" })
-
-//   });
-// });
 
 router.get("/users", (req, res) => {
   let sql = "SELECT * FROM users"
@@ -93,12 +73,6 @@ const createUserTable = () => {
 }
 
 createUserTable();
-
-
-
-/*** Calling this function with a registered user's email sends an email IRL ***/
-/*** I think Nodemail has a free service specifically designed for mocking   ***/
-
 
 // send password reset email 
 router.post("/sendPasswordResetEmail", (req, res) => {
@@ -163,6 +137,6 @@ router.get("/receiveNewPassword", (req, res) => {
     })
 })
 
-app.listen(3002, () => {
+app.listen(3000, () => {
   console.log("Server is running at port 3003");
 });

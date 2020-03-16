@@ -33,28 +33,28 @@
 //   sendEmail();
 // }
 
-const receiveNewPassword = (req, res) => {
-    const { userId, token } = req.params
-    const { password } = req.body
-  
-    User.findOne({ id: userId })
-  
-      .then(user => {
-        const secret = user.password + "-" + user.createdAt
-        const payload = jwt.decode(token, secret)
-        if (payload.userId === user.id) {
-          bcrypt.genSalt(10, (err, salt) => {
-            if (err) return
-            bcrypt.hash(password, salt, (err, hash) => {
-              if (err) return
-              User.findOneAndUpadte({ id: userId }, { password: hash })
-                .then(() => res.status(202).json("Password changed accepted"))
-                .catch(ere => res.status(500).json(err));
-            })
-          })
-        }
-      })
-      .catch(() => {
-        res.status(404).json("Invalid user");
-      })
-  }
+// const receiveNewPassword = (req, res) => {
+//     const { userId, token } = req.params
+//     const { password } = req.body
+
+//     User.findOne({ id: userId })
+
+//       .then(user => {
+//         const secret = user.password + "-" + user.createdAt
+//         const payload = jwt.decode(token, secret)
+//         if (payload.userId === user.id) {
+//           bcrypt.genSalt(10, (err, salt) => {
+//             if (err) return
+//             bcrypt.hash(password, salt, (err, hash) => {
+//               if (err) return
+//               User.findOneAndUpadte({ id: userId }, { password: hash })
+//                 .then(() => res.status(202).json("Password changed accepted"))
+//                 .catch(ere => res.status(500).json(err));
+//             })
+//           })
+//         }
+//       })
+//       .catch(() => {
+//         res.status(404).json("Invalid user");
+//       })
+//   }

@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const SECRET_KEY = "secretkey23456";
 const router = express.Router();
 
-
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   database.get(`SELECT * FROM users WHERE email=?`, email, (err, row) => {
